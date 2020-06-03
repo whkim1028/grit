@@ -1,54 +1,94 @@
-import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import * as WebBrowser from "expo-web-browser";
+import { Ionicons } from "@expo/vector-icons";
+import * as React from "react";
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ImageBackground,
+} from "react-native";
+import { ScrollView, RectButton } from "react-native-gesture-handler";
+import {
+  Avatar,
+  Button,
+  Card,
+  Title,
+  Paragraph,
+  Divider,
+} from "react-native-paper";
 
-import { MonoText } from '../components/StyledText';
+import { MonoText } from "../components/StyledText";
 
 export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={
-              __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
-            }
-            style={styles.welcomeImage}
-          />
-        </View>
+  let today = new Date();
 
-        <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
+  function pad(num) {
+    num = num + "";
+    return num.length < 2 ? "0" + num : num;
+  }
+  let todayResult =
+    today.getFullYear() +
+    "-" +
+    pad(today.getMonth() + 1) +
+    "-" +
+    pad(today.getDay());
 
-          <Text style={styles.getStartedText}>Open up the code for this screen:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            <MonoText>screens/HomeScreen.js</MonoText>
+  function OptionButton({ icon, label, onPress, isLastOption }) {
+    return (
+      <RectButton
+        style={[styles.option, isLastOption && styles.lastOption]}
+        onPress={onPress}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.optionIconContainer}>
+            <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
           </View>
-
-          <Text style={styles.getStartedText}>
-            Change any of the text, save the file, and your app will automatically reload.
-          </Text>
+          <View style={styles.optionTextContainer}>
+            <Text style={styles.optionText}>{label}</Text>
+          </View>
         </View>
+      </RectButton>
+    );
+  }
+  return (
+    <ScrollView style={styles.container}>
+      <Card style={styles.cardStyle}>
+        <Card.Title title="Today's Saying" subtitle={todayResult} />
+        <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
+        <Card.Content>
+          <Title>인물 이름</Title>
+          <Paragraph>명언</Paragraph>
+        </Card.Content>
+        <Card.Actions>
+          <Button
+            mode="contained"
+            icon="cards-heart"
+            color="#1276b8"
+            style={{ marginBottom: 15, marginTop: 5 }}
+          >
+            My 격언에 추가
+          </Button>
+        </Card.Actions>
+      </Card>
+      <Divider></Divider>
 
-        <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-        <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
-        </View>
+      <View style={{ marginTop: 1 }}>
+        <OptionButton
+          icon="md-school"
+          label="인물의 격언 더 보기"
+          onPress={() => WebBrowser.openBrowserAsync("https://docs.expo.io")}
+        />
+        <Divider></Divider>
+        <OptionButton
+          icon="md-compass"
+          label="인물에 대해 더 알아보기"
+          onPress={() => WebBrowser.openBrowserAsync("https://docs.expo.io")}
+        />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -56,124 +96,31 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
-
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
-    );
-  }
-}
-
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#dfe6ed",
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
+  cardStyle: {
+    flex: 0.5,
   },
-  contentContainer: {
-    paddingTop: 30,
+  optionIconContainer: {
+    marginRight: 12,
   },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
+  option: {
+    backgroundColor: "#f5f4f0",
+    paddingHorizontal: 15,
     paddingVertical: 15,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 0,
+    borderColor: "#ededed",
   },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
+  lastOption: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  optionText: {
+    fontSize: 15,
+    alignSelf: "flex-start",
+    marginTop: 1,
   },
 });

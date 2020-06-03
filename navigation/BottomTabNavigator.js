@@ -57,7 +57,7 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case "Home":
-      return "How to get started";
+      return "오늘의 격언";
     case "Links":
       return "Links to learn more";
     case "List":
