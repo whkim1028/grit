@@ -22,6 +22,8 @@ import {
 
 import { MonoText } from "../components/StyledText";
 
+import {Nitzs} from '../contents/Person'
+
 export default function HomeScreen() {
   let today = new Date();
 
@@ -55,8 +57,8 @@ export default function HomeScreen() {
   }
   return (
     <ScrollView style={styles.container}>
+      <Text>{todayResult} , {Nitzs.answer}</Text>
       <Card style={styles.cardStyle}>
-        <Card.Title title="Today's Saying" subtitle={todayResult} />
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
         <Card.Content>
           <Title>인물 이름</Title>
