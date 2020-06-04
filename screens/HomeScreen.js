@@ -22,7 +22,7 @@ import {
 
 import { MonoText } from "../components/StyledText";
 
-import {Nitzs} from '../contents/Person'
+import {dataArr} from '../contents/Person'
 
 export default function HomeScreen() {
   let today = new Date();
@@ -57,12 +57,12 @@ export default function HomeScreen() {
   }
   return (
     <ScrollView style={styles.container}>
-      <Text>{todayResult} , {Nitzs.answer}</Text>
+      <Text>{todayResult}</Text>
       <Card style={styles.cardStyle}>
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
         <Card.Content>
-          <Title>인물 이름</Title>
-          <Paragraph>명언</Paragraph>
+          <Title>{dataArr[0].massege}</Title>
+          <Paragraph>{dataArr[0].name}</Paragraph>
         </Card.Content>
         <Card.Actions>
           <Button
@@ -87,7 +87,7 @@ export default function HomeScreen() {
         <OptionButton
           icon="md-compass"
           label="인물에 대해 더 알아보기"
-          onPress={() => WebBrowser.openBrowserAsync("https://docs.expo.io")}
+          onPress={() => WebBrowser.openBrowserAsync('https://www.google.com')}
         />
       </View>
     </ScrollView>
