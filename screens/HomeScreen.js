@@ -38,6 +38,11 @@ export default function HomeScreen() {
     "-" +
     pad(today.getDay());
 
+  let name = encodeURI(dataArr[0].name);
+  let msg = dataArr[0].massege; 
+
+  
+
   function OptionButton({ icon, label, onPress, isLastOption }) {
     return (
       <RectButton
@@ -87,7 +92,7 @@ export default function HomeScreen() {
         <OptionButton
           icon="md-compass"
           label="인물에 대해 더 알아보기"
-          onPress={() => WebBrowser.openBrowserAsync('https://www.google.com')}
+          onPress={() => WebBrowser.openBrowserAsync(`https://namu.wiki/w/${name}`)}
         />
       </View>
     </ScrollView>
