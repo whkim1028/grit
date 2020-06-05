@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { StyleSheet, Text, ImageBackground, AsyncStorage } from "react-native";
-import { TouchableRipple } from "react-native-paper";
+import {
+  StyleSheet,
+  Text,
+  ImageBackground,
+  AsyncStorage,
+  View,
+} from "react-native";
+import {
+  TouchableRipple,
+  Card,
+  Title,
+  Paragraph,
+  Divider,
+} from "react-native-paper";
 
 function TodayInfo(props) {
   const [isFavorateYn, setIsFavorate] = useState(false);
@@ -55,39 +67,52 @@ function TodayInfo(props) {
   });
 
   return (
-    <ImageBackground
-      source={{ uri: "https://picsum.photos/700" }}
-      style={styles.image}
-    >
-      <Text style={styles.optionText}>"{props.personSay}"</Text>
-      <Text style={styles.personText}>
-        -{props.person}({props.personBirth})-
-      </Text>
-      <TouchableRipple
-        onPress={() => setFavorate(props.personSay, props.person)}
-        rippleColor="red"
+    <Card>
+      <Card.Cover
+        source={{
+          uri: `https://picsum.photos/id/${props.backgrounSeq}/600/400`,
+        }}
+        style={{ height: 400 }}
+      />
+      <Card.Content
+        style={{
+          backgroundColor: "#ededed",
+        }}
       >
-        <MaterialCommunityIcons
-          color="red"
-          size={30}
-          name={setIcon(isFavorateYn)}
-          style={{ marginTop: 10 }}
-        ></MaterialCommunityIcons>
-      </TouchableRipple>
-    </ImageBackground>
+        <Text style={styles.optionText}>"{props.personSay}"</Text>
+        <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+          <Text style={styles.personText}>
+            -{props.person}({props.personBirth})-
+          </Text>
+          <TouchableRipple
+            onPress={() => setFavorate(props.personSay, props.person)}
+            rippleColor="red"
+            style={{ bottom: 25, marginLeft: 20 }}
+          >
+            <MaterialCommunityIcons
+              color="red"
+              size={30}
+              name={setIcon(isFavorateYn)}
+            ></MaterialCommunityIcons>
+          </TouchableRipple>
+        </View>
+      </Card.Content>
+      <Divider></Divider>
+    </Card>
   );
 }
 
 const styles = StyleSheet.create({
   optionText: {
     fontSize: 25,
-    marginTop: 1,
-    fontStyle: "italic",
-    fontWeight: "bold",
-    color: "#e4eced",
+    marginTop: 20,
+    fontStyle: "normal",
+    fontWeight: "900",
+    color: "#708090",
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 20,
+    alignSelf: "center",
   },
 
   image: {
@@ -100,8 +125,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontStyle: "italic",
     fontWeight: "normal",
-    color: "#ced5d6",
-    marginTop: 5,
+    color: "#708090",
+    paddingBottom: 10,
+    bottom: 20,
   },
 });
 

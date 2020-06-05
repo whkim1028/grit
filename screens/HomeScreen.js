@@ -4,6 +4,7 @@ import { Divider } from "react-native-paper";
 import { dataArr } from "../contents/Person";
 import PersonInfo from "../components/PersonInfo";
 import TodayInfo from "../components/TodayInfo";
+import { backGroundSeq } from "../contents/Background";
 
 export default function HomeScreen() {
   const [person, setPerson] = useState(""); //인물
@@ -11,6 +12,7 @@ export default function HomeScreen() {
   const [personBirth, setPersonBirth] = useState(""); //생일
   const [encodeName, setEncodeName] = useState("");
   const [encodeSay, setEncodeSay] = useState("");
+  const [backgrounSeq, setBackgroundSeq] = useState("");
 
   function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -25,10 +27,12 @@ export default function HomeScreen() {
 
   useEffect(() => {
     let cnt = getRandomInt(0, dataArr.length);
+    let cnt2 = getRandomInt(0, backGroundSeq.length);
 
     setPerson(dataArr[cnt].name);
     setPersonSay(dataArr[cnt].massege);
     setPersonBirth(dataArr[cnt].birth);
+    setBackgroundSeq(backGroundSeq[cnt2]);
 
     let today = new Date();
     let todayResult =
@@ -40,7 +44,7 @@ export default function HomeScreen() {
 
     setEncodeName(encodeURI(person));
     setEncodeSay(encodeURI(" 명언"));
-  });
+  }, [person]);
 
   return (
     <View style={styles.container}>
@@ -48,6 +52,7 @@ export default function HomeScreen() {
         personSay={personSay}
         person={person}
         personBirth={personBirth}
+        backgrounSeq={backgrounSeq}
       ></TodayInfo>
       <Divider></Divider>
       <PersonInfo encodeName={encodeName} encodeSay={encodeSay}></PersonInfo>
