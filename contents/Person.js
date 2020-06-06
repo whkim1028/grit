@@ -1,5 +1,24 @@
 export const dataArr = [
   {
+    name: "존 데이비슨 록펠러",
+    birth: "1839-1937",
+    country: "United State",
+    massege: "위대한 것으로 향하기 위해 좋은 것을 포기하는 걸 두려워하지 마라.",
+  },
+  {
+    name: "소크라테스",
+    birth: "BC 470",
+    country: "Greece",
+    massege: "탐험되지 않은 삶은 살 가치가 없다.",
+  },
+  {
+    name: "anonymous",
+    birth: "-",
+    country: "-",
+    massege:
+      "네가 원하는 것을 위해 싸우지 않았다면, 잃어버린 것 때문에 울지 말아라.",
+  },
+  {
     name: "소크라테스",
     birth: "BC 470",
     country: "Greece",
@@ -132,11 +151,5 @@ export const dataArr = [
     birth: "1854-1900",
     country: "Island",
     massege: "괴로운 시련처럼 보이는 것이 뜻밖의 좋은 일일 때가 많다.",
-  },
-  {
-    name: "존 데이비슨 록펠러",
-    birth: "1839-1937",
-    country: "United State",
-    massege: "위대한 것으로 향하기 위해 좋은 것을 포기하는 걸 두려워하지 마라.",
   },
 ];

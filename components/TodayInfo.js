@@ -18,22 +18,22 @@ import {
 function TodayInfo(props) {
   const [isFavorateYn, setIsFavorate] = useState(false);
 
-  const setFavorate = (personSay, Person) => {
+  const setFavorate = (say, per) => {
     let dataArr = {
-      person: Person,
-      personSay: personSay,
+      person: per,
+      personSay: say,
     };
 
-    AsyncStorage.getItem(personSay, (err, value) => {
+    AsyncStorage.getItem(say, (err, value) => {
       if (err == null) {
         let json = JSON.parse(value);
         if (json == null) {
-          AsyncStorage.setItem(personSay, JSON.stringify(dataArr), () => {
+          AsyncStorage.setItem(say, JSON.stringify(dataArr), () => {
             alert("Like!");
             setIsFavorate(true);
           });
         } else {
-          AsyncStorage.removeItem(personSay, (err, value) => {
+          AsyncStorage.removeItem(say, (err, value) => {
             if (err == null) {
               alert("Unlike!");
               setIsFavorate(false);
@@ -55,16 +55,19 @@ function TodayInfo(props) {
   };
   const getFavorate = async () => {
     const keys = await AsyncStorage.getAllKeys();
-    let isFavorate = keys.map(function (value, index) {
-      if (value == props.personSay) {
+
+    setIsFavorate(false);
+
+    for (let i = 0; i < keys.length; i++) {
+      if (keys[i] == props.personSay) {
         setIsFavorate(true);
       }
-    });
+    }
   };
 
   useEffect(() => {
     getFavorate();
-  });
+  }, [props.personSay]);
 
   return (
     <Card>
