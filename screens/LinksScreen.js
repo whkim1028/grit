@@ -15,12 +15,13 @@ export default function LinksScreen() {
       const keys = await AsyncStorage.getAllKeys();
       const result = await AsyncStorage.multiGet(keys);
       let list = [];
+      setIsLoaded(false);
 
       result.map((value, index) => {
-        list = favoratePerson.concat([JSON.parse(value[1])]);
-        setFavoratePerson(list);
-      });
-
+        list = list.concat([JSON.parse(value[1])]);
+      })
+      
+      setFavoratePerson(list);
       setIsLoaded(true);
 
       console.log(favoratePerson);
@@ -31,7 +32,7 @@ export default function LinksScreen() {
 
   useEffect(() => {
     importData();
-  }, []);
+  }, [favoratePerson]);
   return (
     <ScrollView
       style={styles.container}
@@ -40,8 +41,8 @@ export default function LinksScreen() {
       {isLoaded &&
         favoratePerson.map((data, index) => (
           <LikeList
-            favoratePerson={data.person}
-            favoratePersonSay={data.personSay}
+            favoratePerson={data != null ? data.person : ''}
+            favoratePersonSay={data != null ? data.personSay : ''}
             key={index}
           />
         ))}
