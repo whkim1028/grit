@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
-import { Divider } from "react-native-paper";
+import { StyleSheet, View, Button, FlatList } from "react-native";
+import { Divider, IconButton, Colors } from "react-native-paper";
 import { dataArr } from "../contents/Person";
 import PersonInfo from "../components/PersonInfo";
 import TodayInfo from "../components/TodayInfo";
+import { Actions } from "react-native-router-flux";
 import { backGroundSeq } from "../contents/Background";
+import { ScrollView } from "react-native-gesture-handler";
+import RouteBottom from "../components/RouteBottom";
 
 export default function HomeScreen() {
   const [person, setPerson] = useState(""); //인물
@@ -48,14 +51,22 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <TodayInfo
-        personSay={personSay}
-        person={person}
-        personBirth={personBirth}
-        backgrounSeq={backgrounSeq}
-      ></TodayInfo>
-      <Divider></Divider>
-      <PersonInfo encodeName={encodeName} encodeSay={encodeSay}></PersonInfo>
+      <ScrollView>
+        <TodayInfo
+          personSay={personSay}
+          person={person}
+          personBirth={personBirth}
+          backgrounSeq={backgrounSeq}
+          style={{ flex: 0.5 }}
+        ></TodayInfo>
+        <Divider></Divider>
+        <PersonInfo
+          encodeName={encodeName}
+          encodeSay={encodeSay}
+          style={{ flex: 0.25 }}
+        ></PersonInfo>
+      </ScrollView>
+      <RouteBottom></RouteBottom>
     </View>
   );
 }
